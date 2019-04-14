@@ -26,26 +26,28 @@ class Add {
 public:
 	Add()
 	{
-		_sum += _count;
 		++_count;
+		_sum += _count;	
 	}
 	static int GetSum()
 	{
 		return _sum;
 	}
-private:
 	static int _sum;
 	static int _count;
+private:
+	
 };
 
 int Add::_sum = 0;
-int Add::_count = 1;
+int Add::_count = 0;
 
 class Solution {
 public:
 	int Sum_Solution(int n) {
-		Add add[5];
+		Add* add = new Add[n];
 		int i = Add::GetSum();
+		delete[] add;
 		return i;
 	}
 private:
@@ -55,6 +57,7 @@ private:
 int main()
 {
 	Solution s;
-	s.Sum_Solution(5);
+	int i = s.Sum_Solution(1);
+	i += s.Sum_Solution(1);
 	return 0;
 }
