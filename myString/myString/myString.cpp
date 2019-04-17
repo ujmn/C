@@ -150,13 +150,13 @@ void myString::clear()
 bool myString::empty()const
 {
 	if (0 == _size)
-		return 0;
-	else
 		return 1;
+	else
+		return 0;
 }
-myString& operator <<(std::ostream& cout, myString& s)
+std::ostream& operator <<(std::ostream& cout, myString& s)
 {
 	std::cout << "myString " << s._str << " " << s._capacity 
-		<< " " << s._size << std::endl;
-	return s;
+		<< " " << s._size;
+	return cout;
 }

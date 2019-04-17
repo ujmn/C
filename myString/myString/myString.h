@@ -37,7 +37,7 @@ public:
 	void reserve(size_t res_arg = 0);
 	void clear();
 	bool empty()const;
-	friend myString& operator <<(std::ostream& cout, myString& s);
+	friend std::ostream& operator <<(std::ostream& cout, myString& s);
 
 private:
 	char *_str;
