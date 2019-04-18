@@ -160,3 +160,51 @@ std::ostream& operator <<(std::ostream& cout, myString& s)
 		<< " " << s._size;
 	return cout;
 }
+
+myString& myString::operator +=(const myString &s)
+{
+	size_t size = s._size + _size;
+	if (size + 1 > _capacity)
+	{
+		char* temp = new char[size + 1];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = size + 1;
+	}
+	memcpy(_str + _size, s._str, s._size);
+	_size = size;
+	_str[_size] = '\0';
+}
+
+myString& myString::operator +=(char c)
+{
+	if (_size + 1 > _capacity)
+	{
+		char *temp = new char[_capacity * 2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		_capacity *= 2;
+	}
+	_str[_size++] = c;
+	_str[_size] = '\0';
+}
+myString& myString::operator +=(const char* s)
+{
+	size_t size = _size + strlen(s);
+	if (size+1 > _capacity)
+	{
+		char *temp = new char[size + 1];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = size + 1;
+	}
+
+	memcpy(_str + _size, s, strlen(s));
+	_str[size] = '\0';
+	_size = size;
+}

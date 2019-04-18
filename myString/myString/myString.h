@@ -39,6 +39,11 @@ public:
 	bool empty()const;
 	friend std::ostream& operator <<(std::ostream& cout, myString& s);
 
+	//modifiers
+	myString& operator +=(const myString &s);
+	myString& operator +=(char c);
+	myString& operator +=(const char* s);
+
 private:
 	char *_str;
 	size_t _capacity;
