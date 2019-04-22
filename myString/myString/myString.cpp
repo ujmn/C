@@ -176,6 +176,8 @@ myString& myString::operator +=(const myString &s)
 	memcpy(_str + _size, s._str, s._size);
 	_size = size;
 	_str[_size] = '\0';
+
+	return *this;
 }
 
 myString& myString::operator +=(char c)
@@ -190,6 +192,7 @@ myString& myString::operator +=(char c)
 	}
 	_str[_size++] = c;
 	_str[_size] = '\0';
+	return *this;
 }
 myString& myString::operator +=(const char* s)
 {
@@ -207,4 +210,180 @@ myString& myString::operator +=(const char* s)
 	memcpy(_str + _size, s, strlen(s));
 	_str[size] = '\0';
 	_size = size;
+	return *this;
+}
+
+myString& myString::append(const myString& str)
+{
+	size_t size = _size + str._size;
+	if (size >= _capacity)
+	{
+		char *temp = new char[size*2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = size * 2;
+	}
+
+	memcpy(_str + _size, str._str, str._size);
+	_size = size;
+	_str[_size] = '\0';
+
+	return *this;
+}
+
+myString& myString::append(const myString& str, size_t pos, size_t n)
+{
+	if (0 == n)
+		return *this;
+
+	assert(pos > str._size);
+
+	if (pos + n > str._size)
+	{
+		n = str._size - pos;
+	}
+
+	size_t newSize = _size + n;
+	if (newSize >= _capacity)
+	{
+		char *temp = new char[newSize * 2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = newSize * 2;
+	}
+
+	memcpy(_str + _size, str._str + pos, n);
+	_size = newSize;
+	_str[_size] = '\0';
+
+	return *this;
+}
+
+myString& myString::append(const char *s, size_t n)
+{
+	if (0 == n)
+		return *this;
+
+	if (n > strlen(s))
+	{
+		n = strlen(s);
+	}
+
+	size_t newSize = _size + n;
+	if (newSize >= _capacity)
+	{
+		char *temp = new char[newSize * 2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = newSize * 2;
+	}
+
+	memcpy(_str + _size, s, n);
+	_size += n;
+	_str[_size] = '\0';
+
+	return *this;
+}
+
+myString& myString::append(const char *s)
+{
+	size_t n = strlen(s);
+	if (0 == s)
+		return *this;
+	size_t newSize = _size + n;
+	if (newSize >= _capacity)
+	{
+		char *temp = new char[newSize * 2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = newSize * 2;
+	}
+
+	memcpy(_str + _size, s, n);
+	_size += n;
+	_str[_size] = '\0';
+
+	return *this;
+}
+
+myString& myString::append(size_t n, char c)
+{
+	if (0 == n)
+		return *this;
+
+	size_t newSize = _size + n;
+	if (newSize >= _capacity)
+	{
+		char *temp = new char[newSize * 2];
+		memcpy(temp, _str, _size);
+		delete[] _str;
+		_str = temp;
+		temp = nullptr;
+		_capacity = newSize * 2;
+	}
+
+	memset(_str + _size, c, n);
+	_size = newSize;
+	_str[_size] = '\0';
+
+	return *this;
+}
+
+
+///////////////////////////////////////////////////////////
+//Iterator
+myString::iterator myString::begin()
+{
+	assert(_str);
+	return &_str[0];
+}
+
+myString::const_iterator myString::begin() const
+{
+	assert(_str);
+	return &_str[0];
+}
+
+myString::iterator myString::end()
+{
+	assert(_str);
+	return &_str[_size-1];
+}
+
+myString::const_iterator myString::end() const
+{
+	assert(_str);
+	return &_str[_size - 1];
+}
+
+myString::reverse_iterator myString::rbegin()
+{
+	assert(_str);
+	return &_str[_size-1];
+}
+
+myString::const_reverse_iterator myString::rbegin()const
+{
+	assert(_str);
+	return &_str[_size - 1];
+}
+
+myString::reverse_iterator myString::rend()
+{
+	assert(_str);
+	return &_str[0];
+}
+
+myString::const_reverse_iterator myString::rend() const
+{
+	assert(_str);
+	return &_str[0];
 }

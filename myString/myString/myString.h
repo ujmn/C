@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <assert.h>
 
 class myString
 {
@@ -43,6 +44,26 @@ public:
 	myString& operator +=(const myString &s);
 	myString& operator +=(char c);
 	myString& operator +=(const char* s);
+	myString& append(const myString& str);
+	myString& append(const myString& str, size_t pos, size_t n);
+	myString& append(const char *s, size_t n);
+	myString& append(const char *s);
+	myString& append(size_t n, char c);
+
+	//Iterators
+	typedef char* iterator;
+	typedef char* reverse_iterator;
+	typedef const iterator const_iterator;
+	typedef const reverse_iterator const_reverse_iterator;
+
+	iterator begin();
+	const_iterator begin() const;
+	iterator end();
+	const_iterator end() const;
+	reverse_iterator rbegin();
+	const_reverse_iterator rbegin()const;
+	reverse_iterator rend();
+	const_reverse_iterator rend() const;
 
 private:
 	char *_str;
