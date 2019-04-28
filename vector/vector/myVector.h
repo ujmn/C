@@ -9,8 +9,8 @@ public:
 
 	myVector();
 	myVector(size_t m, const T& value = T());
-	myVector(Iterator begin, Iterator end);
-	myVector(const myVector& v);
+	myVector(Iterator first, Iterator last);
+	myVector(const myVector<T>& v);
 	myVector& operator =(myVector v);
 	~myVector();
 

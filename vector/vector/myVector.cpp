@@ -21,13 +21,18 @@ myVector::myVector(size_t m, const T& value = T())
 }
 
 template <class T>
-myVector::myVector(Iterator begin, Iterator end)
+myVector::myVector(Iterator first, Iterator last)
 {
-
+	Reserve(last - first);
+	while (first != last)
+	{
+		push_back(*first);
+		first++;
+	}
 }
 
 template <class T>
-myVector::myVector(const myVector& v)
+myVector::myVector(const myVector<T>& v)
 {
 
 }
