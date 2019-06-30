@@ -10,6 +10,10 @@ void TestFunc()
 	}
 
 	t.InOrder();
+	if (t.IsValidRBTree())
+		cout << "该红黑树符合要求" << endl;
+	else
+		cout << "该红黑树不符合要求" << endl;
 }
 
 int main()

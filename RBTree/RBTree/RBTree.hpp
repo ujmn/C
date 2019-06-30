@@ -159,6 +159,36 @@ public:
 	{
 		Node* pRoot = GetRoot();
 		_InOrder(pRoot);
+		cout << endl;
+	}
+
+	bool IsValidRBTree()
+	{
+		Node* pRoot = GetRoot();
+
+		if (nullptr == pRoot)
+			return true;
+
+		if (BLACK != pRoot->_color)
+		{
+			cout << "违反性质一：根节点颜色为黑色" << endl;
+			return false;
+		}
+			
+		//随便统计一条路径上的黑色结点数
+		Node* pCur = pRoot;
+		int k = 0;
+		while (pCur)
+		{
+			if (pCur && BLACK == pCur->_color)
+			{
+				++k;
+			}
+
+			pCur = pCur->_pLeft;
+		}
+
+		return _IsValidRBTree(pRoot, 0, k);
 	}
 
 private:
@@ -264,6 +294,36 @@ private:
 		_InOrder(pCur->_pLeft);
 		cout << pCur->val << " ";
 		_InOrder(pCur->_pRight);
+	}
+
+	bool _IsValidRBTree(Node* pRoot, int k, int blackCount)
+	{
+		if (nullptr == pRoot)
+			return true;
+
+		if (BLACK == pRoot->_color)
+			++k;
+
+		Node* pParent = pRoot->_pParent;
+		if (pParent && RED == pParent->_color && RED == pRoot->_color)
+		{
+			cout << "违反性质三：没有连在一起的红色结点" << endl;
+			return false;
+		}
+
+		if (nullptr == pRoot->_pLeft && nullptr == pRoot->_pRight)
+		{
+			if (k != blackCount)
+			{
+				cout << "违反性质四：每条路径上的黑色结点个数相同" << endl;
+				return false;
+			}
+
+			return true;
+		}
+
+		return _IsValidRBTree(pRoot->_pLeft, k, blackCount) &&
+				_IsValidRBTree(pRoot->_pRight, k, blackCount);
 	}
 
 private:
